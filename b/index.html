@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex, nofollow" />
+<title>Un bien partagé sur Covyo</title>
+<style>
+  :root {
+    --bg: #f4f6fa; --card: #ffffff; --ink: #14223d; --muted: #5b6b8c;
+    --line: #dce3f2; --brand: #0e1f4d; --brand-ink: #ffffff; --soft: #eef2fa;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #0b1226; --card: #131c36; --ink: #eef2fb; --muted: #9db0d3; --line: #25325a; --brand: #ffffff; --brand-ink: #0e1f4d; --soft: #1a2547; }
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; min-height: 100%; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg); color: var(--ink);
+    display: flex; align-items: center; justify-content: center; padding: 24px 16px;
+  }
+  main { width: 100%; max-width: 420px; background: var(--card); border: 1px solid var(--line); border-radius: 22px; padding: 28px 24px; }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 18px; letter-spacing: -0.2px; margin-bottom: 22px; }
+  .mark { width: 26px; height: 26px; border-radius: 8px; background: var(--brand); }
+  h1 { font-size: 22px; line-height: 1.25; margin: 0 0 8px; letter-spacing: -0.3px; }
+  p { margin: 0 0 14px; line-height: 1.5; color: var(--muted); font-size: 15px; }
+  .open {
+    display: block; text-align: center; text-decoration: none; background: var(--brand); color: var(--brand-ink);
+    font-weight: 700; font-size: 16px; padding: 15px 18px; border-radius: 14px; margin: 20px 0 18px;
+  }
+  .help { background: var(--soft); border-radius: 14px; padding: 14px 16px; }
+  .help b { color: var(--ink); }
+  .help p { font-size: 13.5px; margin-bottom: 8px; }
+  .help p:last-child { margin-bottom: 0; }
+  .hidden { display: none; }
+</style>
+</head>
+<body>
+<main>
+  <div class="brand"><span class="mark"></span>Covyo</div>
+
+  <section id="ok" class="hidden">
+    <h1>Un bien vous a été partagé sur Covyo</h1>
+    <p>Ouvrez-le dans l’app pour voir l’annonce, l’analyse et l’emplacement du bien.</p>
+    <a id="open" class="open" href="#">Ouvrir dans Covyo</a>
+    <div class="help">
+      <p><b>Rien ne se passe&nbsp;?</b> Covyo n’est probablement pas encore installé sur ce téléphone.</p>
+      <p>L’app est en test fermé&nbsp;: demandez une invitation à la personne qui vous a envoyé ce lien, installez Covyo, puis rouvrez ce lien.</p>
+      <p>Il faut un compte Covyo pour voir le bien&nbsp;; vous pourrez le créer à l’ouverture de l’app.</p>
+    </div>
+  </section>
+
+  <section id="bad" class="hidden">
+    <h1>Ce lien n’est pas valide</h1>
+    <p>Demandez à la personne qui vous l’a envoyé de vous le renvoyer depuis la fiche du bien dans Covyo.</p>
+  </section>
+</main>
+
+<script>
+  (function () {
+    var id = new URLSearchParams(location.search).get('id') || '';
+    var valid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id);
+    document.getElementById(valid ? 'ok' : 'bad').classList.remove('hidden');
+    if (valid) document.getElementById('open').setAttribute('href', 'covyo://bien/' + id.toLowerCase());
+  })();
+</script>
+</body>
+</html>
